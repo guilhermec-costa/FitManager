@@ -1,8 +1,10 @@
 package com.fitmanager.system.domain.Diet;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fitmanager.system.domain.BaseEntity;
+import com.fitmanager.system.domain.Meal.Meal;
 import com.fitmanager.system.domain.Student.Student;
 
 import jakarta.persistence.Column;
@@ -11,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -37,4 +40,7 @@ public class Diet extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "student_id")
 	private Student student;
+
+	@ManyToMany(mappedBy = "diets")
+	private List<Meal> meals;
 }

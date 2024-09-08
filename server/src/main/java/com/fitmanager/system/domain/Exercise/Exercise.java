@@ -1,10 +1,9 @@
-package com.fitmanager.system.domain.Meal;
-
+package com.fitmanager.system.domain.Exercise;
 
 import java.util.List;
 
 import com.fitmanager.system.domain.BaseEntity;
-import com.fitmanager.system.domain.Diet.Diet;
+import com.fitmanager.system.domain.Training.Training;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,29 +17,32 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table
-public class Meal extends BaseEntity {
-   
+public class Exercise extends BaseEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     @Column
-    private int calories;
+    private String name;
 
     @Column
-    private double protein;
+    private String description;
 
     @Column
-    private double carbs;
+    private int sets;
 
     @Column
-    private double fats;
+    private int repetions;
+
+    @Column
+    private int restTime;
 
     @ManyToMany
     @JoinTable(
-        name = "meal_diet",
-        joinColumns = { @JoinColumn(name = "meal_id") },
-        inverseJoinColumns =  { @JoinColumn(name = "diet_id")}
+        name = "training_exercise",
+        joinColumns = { @JoinColumn(name = "exercise_id") },
+        inverseJoinColumns = { @JoinColumn(name = "training_id")}
     )
-    private List<Diet> diets;
+    private List<Training> trainings;
 }

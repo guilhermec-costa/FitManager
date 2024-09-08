@@ -1,8 +1,9 @@
-package com.fitmanager.system.domain.BodyMeasurement;
+package com.fitmanager.system.domain.Training;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fitmanager.system.domain.BaseEntity;
+import com.fitmanager.system.domain.Exercise.Exercise;
 import com.fitmanager.system.domain.Student.Student;
 
 import jakarta.persistence.Column;
@@ -10,36 +11,30 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
-@AllArgsConstructor
 @Entity
 @Table
-public class BodyMeasurement extends BaseEntity {
-    
+public class Training extends BaseEntity {
+   
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    @Column(name = "measurement_date")
-    private LocalDateTime measurementDate;
+    @Column
+    private String name;
+    
+    @Column
+    private String description;
 
     @Column
-    private double weight;
-
-    @Column
-    private double heigth;
-
-    @Column(name = "body_fat_percentage")
-    private double bodyFatPercentage;
-
-    @Column(name = "chest_circumference")
-    private double chestCircumference;
+    private int duration;
 
     @ManyToOne
     private Student student;
+
+    @ManyToMany(mappedBy = "trainings")
+    private List<Exercise> exercises;
 }
