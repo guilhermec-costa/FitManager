@@ -12,7 +12,7 @@ public record Phone(String phone) implements ValueObject {
     private static String PHONE_VALIDATION_REGEX;
 
     static {
-        PHONE_VALIDATION_REGEX = "^\\+?[0-9. ()-]{7,25}$";
+        PHONE_VALIDATION_REGEX = "";
         PHONE_PATTERN = Pattern.compile(PHONE_VALIDATION_REGEX);
     }
 

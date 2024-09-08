@@ -1,6 +1,7 @@
 package com.fitmanager.system.domain.Student;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fitmanager.system.domain.BaseEntity;
@@ -13,8 +14,10 @@ import com.fitmanager.system.domain.VO.Phone;
 import com.fitmanager.system.domain.VO.converters.EmailAttributeConverter;
 import com.fitmanager.system.domain.VO.converters.PhoneAttributeConverter;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,17 +29,28 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table
 public class Student extends BaseEntity {
 
+    public Student(String name, String email, String phone) {
+        this.name = name;
+        this.email = new Email(email);
+        this.phone = new Phone(phone);
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
+    @Column
+    private String name;
 
     @Convert(converter = EmailAttributeConverter.class)
     @Column(unique = true, nullable = false, length = 50)
@@ -52,8 +66,8 @@ public class Student extends BaseEntity {
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 
-    @OneToMany(mappedBy = "student")
-    private List<Goal> goals;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Goal> goals = new ArrayList<>();
 
     @OneToMany(mappedBy = "student")
     private List<BodyMeasurement> bodyMeasurements;
@@ -74,7 +88,4 @@ public class Student extends BaseEntity {
         goals.remove(goal);
         goal.setStudent(null);
     }
-
-    
-
 }
