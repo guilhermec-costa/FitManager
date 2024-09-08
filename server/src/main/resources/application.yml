@@ -1,0 +1,31 @@
+server:
+    port: 8080
+spring:
+  application:
+    name: system
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fitmanager
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop 
+    show-sql: false
+    database: postgresql
+    properties:
+        hibernate:
+            dialect: org.hibernate.dialect.PostgreSQLDialect
+            format_sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+api:
+  security:
+    token:
+      secret_key: ${JWT_SECRET:secret_key}
+      issuer: ${springapp:springapp}
