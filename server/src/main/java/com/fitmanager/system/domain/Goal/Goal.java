@@ -10,11 +10,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
+import com.fitmanager.system.domain.BaseEntity;
 import com.fitmanager.system.domain.Student.Student;
 
 @Entity
 @Table
-public class Goal {
+public class Goal extends BaseEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,6 +29,9 @@ public class Goal {
 
     @Column(name = "end_date")
     private LocalDateTime endDate;
+
+    @Column
+    private double progress;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
