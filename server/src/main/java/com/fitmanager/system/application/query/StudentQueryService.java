@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.fitmanager.system.application.abstractions.BaseQueryService;
 import com.fitmanager.system.application.abstractions.Query;
-import com.fitmanager.system.application.presentation.StudentDTO;
 import com.fitmanager.system.application.query.records.FindOneStudentQuery;
 import com.fitmanager.system.domain.Student.Student;
 import com.fitmanager.system.infra.repositories.StudentRepository;

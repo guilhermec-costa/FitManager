@@ -6,10 +6,12 @@ import com.fitmanager.system.domain.ValueObject;
 
 import java.util.regex.Matcher;
 
-public record Email(String email) implements ValueObject {
+public class Email implements ValueObject {
     private static Pattern EMAIL_PATTERN;
     private static String EMAIL_VALIDATION_REGEX;
     private static short MAXIMUM_EMAIL_LENGTH;
+
+    private final String email;
 
     public Email(String email) {
         if (email == null || !isValid(email)) {

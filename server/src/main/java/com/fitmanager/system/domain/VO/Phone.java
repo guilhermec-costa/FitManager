@@ -7,9 +7,11 @@ import java.util.regex.Matcher;
 
 import com.fitmanager.system.domain.ValueObject;
 
-public record Phone(String phone) implements ValueObject {
+public class Phone implements ValueObject {
     private static Pattern PHONE_PATTERN;
     private static String PHONE_VALIDATION_REGEX;
+
+    private final String phone;
 
     static {
         PHONE_VALIDATION_REGEX = "";
