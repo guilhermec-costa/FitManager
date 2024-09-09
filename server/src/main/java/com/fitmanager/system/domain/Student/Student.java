@@ -17,7 +17,6 @@ import com.fitmanager.system.domain.VO.converters.PhoneAttributeConverter;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -43,6 +42,14 @@ public class Student extends BaseEntity {
         this.name = name;
         this.email = new Email(email);
         this.phone = new Phone(phone);
+    };
+
+    public Student(String name,String email,String phone,LocalDateTime birthDate) {
+        this.name = name;
+        this.email = new Email(email);
+        this.phone = new Phone(phone);
+        this.birthDate = birthDate;
+        this.registrationDate = LocalDateTime.now();
     }
 
     @Id
@@ -64,7 +71,7 @@ public class Student extends BaseEntity {
     private LocalDateTime birthDate;
 
     @Column(name = "registration_date")
-    private LocalDateTime registrationDate;
+    private LocalDateTime registrationDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<Goal> goals = new ArrayList<>();

@@ -3,7 +3,6 @@ package com.fitmanager.system.application.query;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fitmanager.system.application.abstractions.BaseQueryService;
@@ -16,7 +15,6 @@ import com.fitmanager.system.infra.repositories.StudentRepository;
 public class StudentQueryService implements BaseQueryService<Student> {
     private StudentRepository studentRepository;
 
-    @Autowired
     public StudentQueryService(final StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }

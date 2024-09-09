@@ -1,5 +1,6 @@
 package com.fitmanager.system.application.presentation;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -12,7 +13,8 @@ import lombok.NoArgsConstructor;
 public class StudentDTO {
     private String id;
     private String name;
-    private EmailDTO email;
-    private PhoneDTO phone;
+    private String email;
+    private String phone;
+    private LocalDateTime birthDate;
     private List<GoalDTO> goals;
 }

@@ -1,8 +1,6 @@
 package com.fitmanager.system.application.mappers;
 
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fitmanager.system.application.presentation.StudentDTO;
@@ -13,7 +11,6 @@ public class StudentMapper {
 
     private final ModelMapper modelMapper;
 
-    @Autowired
     public StudentMapper(final ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }

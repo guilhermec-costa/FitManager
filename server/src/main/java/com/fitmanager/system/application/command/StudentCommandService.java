@@ -1,12 +1,12 @@
 package com.fitmanager.system.application.command;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fitmanager.system.application.abstractions.BaseCommandService;
 import com.fitmanager.system.application.abstractions.ICommand;
 import com.fitmanager.system.application.command.records.CreateGoalCommand;
 import com.fitmanager.system.application.command.records.CreateStudentCommand;
+import com.fitmanager.system.application.command.records.DeleteStudentCommand;
 import com.fitmanager.system.domain.Goal.Goal;
 import com.fitmanager.system.domain.Student.Student;
 import com.fitmanager.system.infra.repositories.StudentRepository;
@@ -14,11 +14,10 @@ import com.fitmanager.system.infra.repositories.StudentRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-public class StudentCommandService implements BaseCommandService<Student> {
+public class StudentCommandService implements BaseCommandService<Student, String> {
 
     private final StudentRepository studentRepository;
 
-    @Autowired
     public StudentCommandService(final StudentRepository _studentRepository) {
         studentRepository = _studentRepository;
     }
@@ -35,9 +34,19 @@ public class StudentCommandService implements BaseCommandService<Student> {
     }
 
     @Override
-    public void register(ICommand command) {
+    public String register(ICommand command) {
         var creationCommand = (CreateStudentCommand) command;
-        Student student = new Student(creationCommand.name(), creationCommand.email(), creationCommand.phone());
-        studentRepository.save(student);
+        Student student = new Student(creationCommand.name(), creationCommand.email(), creationCommand.phone(), creationCommand.birthDate());
+        Student savedUser = studentRepository.save(student);
+        return savedUser.getId();
+    }
+
+    @Override
+    public void unregister(ICommand command) {
+        var deletionCommand = (DeleteStudentCommand)command;
+        boolean userExist = studentRepository.existsById(deletionCommand.id());
+        if(!userExist) throw new RuntimeException("User does not exist");
+
+        studentRepository.deleteById(deletionCommand.id());
     }
 }
