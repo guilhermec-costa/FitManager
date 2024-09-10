@@ -27,16 +27,29 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AccessLevel;
 
-@Data
+@Getter
+@Setter(AccessLevel.PRIVATE)
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table
 public class Student extends BaseEntity {
+
+    @SuppressWarnings("unused")
+    private Student() {
+    };
+
+    public static Student create(String name, String email, String phone) {
+        return new Student(name, email, phone);
+    }
+
+    public static Student create(String name, String email, String phone, LocalDateTime birthDate) {
+        return new Student(name, email, phone, birthDate);
+    }
 
     public Student(String name, String email, String phone) {
         this.name = name;
@@ -44,7 +57,7 @@ public class Student extends BaseEntity {
         this.phone = new Phone(phone);
     };
 
-    public Student(String name,String email,String phone,LocalDateTime birthDate) {
+    public Student(String name, String email, String phone, LocalDateTime birthDate) {
         this.name = name;
         this.email = new Email(email);
         this.phone = new Phone(phone);
@@ -87,12 +100,15 @@ public class Student extends BaseEntity {
     private Diet diet;
 
     public void associateGoal(Goal goal) {
-        goal.setStudent(this);
+        if (goal.canBeAssociated())
+            throw new RuntimeException("Not possible to add goal");
+
+        goal.associate(this);
         goals.add(goal);
     }
 
     public void dissociateGoal(Goal goal) {
+        goal.dissociate(this);
         goals.remove(goal);
-        goal.setStudent(null);
     }
 }

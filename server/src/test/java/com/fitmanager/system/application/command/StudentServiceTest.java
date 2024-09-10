@@ -12,8 +12,8 @@ import static org.mockito.Mockito.when;
 import java.util.Optional;
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,13 +54,13 @@ public class StudentServiceTest {
         when(studentRepository.findById(anyString())).thenReturn(Optional.of(generatedStudent));
         when(studentRepository.save(any(Student.class))).thenReturn(generatedStudent);
 
-        Goal goal = new Goal(goalCommand.description(), goalCommand.startDate());
         studentService.addGoalToStudent(generatedStudent.getId(), goalCommand);
 
         verify(studentRepository, times(1)).findById(generatedStudent.getId());
         verify(studentRepository).save(generatedStudent);
 
-        assertTrue(generatedStudent.getGoals().contains(goal));
+        assertThat(generatedStudent.getGoals().stream()
+            .filter(goal -> goal.getDescription() == goalCommand.description())).isNotEmpty();
     }
 
     @Test

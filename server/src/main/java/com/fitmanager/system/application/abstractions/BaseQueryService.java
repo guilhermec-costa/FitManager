@@ -5,6 +5,6 @@ import java.util.List;
 
 public interface BaseQueryService<T> {
 
-    <Q extends Query> Optional<T> findOne(Q query);
+    <Q extends IQuery> Optional<T> findOne(Q query);
     List<T> findAll();
 }

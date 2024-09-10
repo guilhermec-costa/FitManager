@@ -29,14 +29,13 @@ public class StudentCommandService implements BaseCommandService<Student, String
 
         Goal goal = new Goal(goalCommand.description(), goalCommand.startDate());
         student.associateGoal(goal);
-
         studentRepository.save(student);
     }
 
     @Override
     public String register(ICommand command) {
         var creationCommand = (CreateStudentCommand) command;
-        Student student = new Student(creationCommand.name(), creationCommand.email(), creationCommand.phone(), creationCommand.birthDate());
+        Student student = Student.create(creationCommand.name(), creationCommand.email(), creationCommand.phone(), creationCommand.birthDate());
         Student savedUser = studentRepository.save(student);
         return savedUser.getId();
     }

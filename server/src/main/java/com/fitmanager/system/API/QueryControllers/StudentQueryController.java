@@ -17,7 +17,6 @@ import com.fitmanager.system.application.query.StudentQueryService;
 import com.fitmanager.system.application.query.records.FindOneStudentQuery;
 import com.fitmanager.system.domain.Student.Student;
 
-import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("student")
