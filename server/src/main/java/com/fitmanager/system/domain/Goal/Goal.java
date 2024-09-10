@@ -20,6 +20,7 @@ import lombok.AccessLevel;
 import java.time.LocalDateTime;
 
 import com.fitmanager.system.domain.BaseEntity;
+import com.fitmanager.system.domain.Goal.exceptions.GoalAlreadyCompletedException;
 import com.fitmanager.system.domain.Student.Student;
 
 
@@ -65,6 +66,12 @@ public class Goal extends BaseEntity {
         this.description = description;
         this.startDate = startDate;
     }
+
+    public Goal(String description, LocalDateTime startDate, LocalDateTime endDate) {
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
     
     private boolean isCompleted() {
         final var _isCompleted = (progress == MAXIMUM_GOAL_PROGRESS) && (status == GoalStatus.COMPLETED);
@@ -72,7 +79,8 @@ public class Goal extends BaseEntity {
     }
     
     private boolean isGoalDateRangeValid() {
-        return startDate.isBefore(endDate);
+        final boolean startDateIsBeforeEndDate = startDate.isBefore(endDate);
+        return startDateIsBeforeEndDate || (startDateIsBeforeEndDate && endDate == null);
     }
     
     private boolean hasStudentAssociated() {
@@ -87,7 +95,7 @@ public class Goal extends BaseEntity {
     }
 
     public void completeGoal() {
-        if(isCompleted()) throw new RuntimeException("Goal is already completed");
+        if(isCompleted()) throw new GoalAlreadyCompletedException("Goal is already completed");
         status = GoalStatus.COMPLETED;
         progress = MAXIMUM_GOAL_PROGRESS;
     }
@@ -96,7 +104,7 @@ public class Goal extends BaseEntity {
         this.student = student;
     }
 
-    public void dissociate(final Student student) {
+    public void dissociate() {
         this.student = null;
     }
 }

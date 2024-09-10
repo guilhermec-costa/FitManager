@@ -20,12 +20,12 @@ public class StudentUtils {
         final var fakeEmail = faker.internet().emailAddress();
         final var fakeId = UUID.randomUUID().toString();
 
-        final Email email = new Email(fakeEmail);
         Student student = Student.builder()
-            .id(fakeId)
-            .email(email)
-            .goals(new ArrayList<Goal>())
-            .build();
+                .id(fakeId)
+                // .user(new User("guilherme", "costa", "password", new Email(fakeEmail), new Phone(fakePhone)))
+                .email(new Email(fakeEmail))
+                .goals(new ArrayList<Goal>())
+                .build();
 
         return student;
     }

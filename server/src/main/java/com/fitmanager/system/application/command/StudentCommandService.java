@@ -27,7 +27,7 @@ public class StudentCommandService implements BaseCommandService<Student, String
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
-        Goal goal = new Goal(goalCommand.description(), goalCommand.startDate());
+        Goal goal = new Goal(goalCommand.description(), goalCommand.startDate(), goalCommand.endDate());
         student.associateGoal(goal);
         studentRepository.save(student);
     }

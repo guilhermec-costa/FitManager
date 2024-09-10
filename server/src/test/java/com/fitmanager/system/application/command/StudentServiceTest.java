@@ -49,7 +49,7 @@ public class StudentServiceTest {
     @DisplayName("Should associate a goal to a student")
     void shouldAddGoalToStudent() {
         Student generatedStudent = StudentUtils.generateStudent();
-        CreateGoalCommand goalCommand = new CreateGoalCommand("A simple goal", LocalDateTime.now());
+        CreateGoalCommand goalCommand = new CreateGoalCommand("A simple goal", LocalDateTime.now(), LocalDateTime.now().plusHours(2));
 
         when(studentRepository.findById(anyString())).thenReturn(Optional.of(generatedStudent));
         when(studentRepository.save(any(Student.class))).thenReturn(generatedStudent);
@@ -67,7 +67,7 @@ public class StudentServiceTest {
     @DisplayName("Should throw exception on add goal to a student")
     void shouldThrownOnAddGoalToStudent() {
         Student generatedStudent = Mockito.mock(Student.class);
-        CreateGoalCommand goalCommand = new CreateGoalCommand("A simple goal", LocalDateTime.now());
+        CreateGoalCommand goalCommand = new CreateGoalCommand("A simple goal", LocalDateTime.now(), LocalDateTime.now().plusHours(2));
 
         assertThatThrownBy(() -> studentService.addGoalToStudent(generatedStudent.getId(), goalCommand))
                 .isInstanceOf(RuntimeException.class).hasMessageContaining("Student not found");

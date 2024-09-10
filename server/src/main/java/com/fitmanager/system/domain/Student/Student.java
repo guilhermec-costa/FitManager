@@ -39,32 +39,6 @@ import lombok.AccessLevel;
 @Table
 public class Student extends BaseEntity {
 
-    @SuppressWarnings("unused")
-    private Student() {
-    };
-
-    public static Student create(String name, String email, String phone) {
-        return new Student(name, email, phone);
-    }
-
-    public static Student create(String name, String email, String phone, LocalDateTime birthDate) {
-        return new Student(name, email, phone, birthDate);
-    }
-
-    public Student(String name, String email, String phone) {
-        this.name = name;
-        this.email = new Email(email);
-        this.phone = new Phone(phone);
-    };
-
-    public Student(String name, String email, String phone, LocalDateTime birthDate) {
-        this.name = name;
-        this.email = new Email(email);
-        this.phone = new Phone(phone);
-        this.birthDate = birthDate;
-        this.registrationDate = LocalDateTime.now();
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -99,8 +73,34 @@ public class Student extends BaseEntity {
     @JoinColumn(name = "diet_id")
     private Diet diet;
 
+    @SuppressWarnings("unused")
+    private Student() {
+    };
+
+    public static Student create(String name, String email, String phone) {
+        return new Student(name, email, phone);
+    }
+
+    public static Student create(String name, String email, String phone, LocalDateTime birthDate) {
+        return new Student(name, email, phone, birthDate);
+    }
+
+    public Student(String name, String email, String phone) {
+        this.name = name;
+        this.email = new Email(email);
+        this.phone = new Phone(phone);
+    };
+
+    public Student(String name, String email, String phone, LocalDateTime birthDate) {
+        this.name = name;
+        this.email = new Email(email);
+        this.phone = new Phone(phone);
+        this.birthDate = birthDate;
+        this.registrationDate = LocalDateTime.now();
+    }
+
     public void associateGoal(Goal goal) {
-        if (goal.canBeAssociated())
+        if (!goal.canBeAssociated())
             throw new RuntimeException("Not possible to add goal");
 
         goal.associate(this);
@@ -108,7 +108,7 @@ public class Student extends BaseEntity {
     }
 
     public void dissociateGoal(Goal goal) {
-        goal.dissociate(this);
+        goal.dissociate();
         goals.remove(goal);
     }
 }
