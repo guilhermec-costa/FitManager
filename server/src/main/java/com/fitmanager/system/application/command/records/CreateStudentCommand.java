@@ -4,5 +4,12 @@ import java.time.LocalDateTime;
 
 import com.fitmanager.system.application.abstractions.ICommand;
 
-public record CreateStudentCommand(String name, String email, String phone, LocalDateTime birthDate) implements ICommand {
+import jakarta.validation.constraints.NotNull;
+
+public record CreateStudentCommand(
+	@NotNull(message = "Name is required") String name, 
+	@NotNull String email, 
+	@NotNull String phone, 
+	@NotNull LocalDateTime birthDate) implements ICommand {
+
 }

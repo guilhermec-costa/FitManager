@@ -42,7 +42,7 @@ public class StudentServiceTest {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        studentService = new StudentCommandService(studentRepository);
+        studentService = new StudentCommandService(studentRepository, goalRepository);
     }
 
     @Test
